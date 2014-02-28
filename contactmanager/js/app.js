@@ -64,6 +64,7 @@ $(function(){
             "click #cancel-btn" : "cancel",
             "click a.destroy"   : "destroy",
             "click .labels"     : "showDetails",
+            "keyup #phoneNumber"  : "checkIfNum",
             "keypress .edit"    : "updateOnEnter"
         },
 
@@ -100,13 +101,15 @@ $(function(){
                 var el = $(this);
                 contactData[el.attr("id")]=el.val();
             });
-
+            var email = contactData.email;
+            if(email!="") if(!appView.checkEmail(email)){alertify.alert("Invalid Email."); return;}
             if(contactData.firstName && contactData.lastName){
                 this.model.save(contactData);
-                this.render();               
+                this.render();
+                alertify.success("Updated "+ this.model.get("firstName") +" "+this.model.get("lastName"));              
             }else foundEmpty();
 
-            this.$el.closest("li").find(".details").show("highlight", 2000);
+            this.$el.closest("li").find(".details").show("highlight", 4000);
             this.$el.closest("li").find("label").addClass('active');
             return;
         },
@@ -126,7 +129,10 @@ $(function(){
 
         //remove the item, destroy the model
         destroy: function(){
-            this.$el.closest("li").hide("explode", 1000);
+            var first = this.model.get("firstName");
+            var last = this.model.get("lastName");
+            this.$el.closest("li").hide("explode", 2000);
+            alertify.success(first + " " + last +" was successfully deleted");
             this.model.destroy();
             this.reset();
         },
@@ -141,6 +147,15 @@ $(function(){
         showDetails: function (e){
             $(e.target).toggleClass('active');
             $(e.target).siblings(".details").slideToggle('fast');
+        },
+
+        checkIfNum: function (e) {
+            var target = $(e.target).closest("div").find("#phoneNumber");
+            var val = target.val();
+            if(isNaN(val.trim())){
+                alertify.alert("Numbers only!");
+                target.val(val.replace(/\D/g, ""));
+            }
         }
     }); //end of ContactView
 
@@ -152,12 +167,13 @@ $(function(){
 
         //delegate events for creating and deleting
         events: {
-            "click #add-btn"        : "addContact",
-            "keypress .input"       : "createOnEnter",
-            "keyup #searchBar"      : "search",
-            "change select"         : "search",
-            "click #clear-selected" : "clearSelected",
-            "click #toggle-all"     : "toggleAll"
+            "click #add-btn"            : "addContact",
+            "keypress .input"           : "createOnEnter",
+            "keyup #searchBar"          : "search",
+            "keyup .input#phoneNumber"  : "checkIfNum",
+            "change select"             : "search",
+            "click #clear-selected"     : "clearSelected",
+            "click #toggle-all"         : "toggleAll"
         },
 
         //bind contactList to relevant events
@@ -219,19 +235,26 @@ $(function(){
 
         //create new contact in contactList
         addContact: function() {
-            if($("#lastName").val() && $("#firstName").val()){
+            var last = $("#lastName").val().trim();
+            var first = $("#firstName").val().trim();
+            var email = $("#email").val().trim();
+            
+            if( last && first) {
+                if(email!="") if(!this.checkEmail(email)){alertify.alert("Invalid Email."); return;}
                 var contactData={};
                 $("section .input").each(function (i){
-                    contactData[this.id] = $(this).val();
+                    contactData[this.id] = $(this).val().trim();
                 });
                 contactList.create(contactData);
                  $("#firstName").focus();
+                 this.show();
+                 alertify.success(first + " " + last +" was successfully added");
                 //clear input fields after successful addition of contact
                 $("section .input").each(function(){
                     $(this).val('');
                 });
             }else foundEmpty();
-            this.show();
+            
         },
 
         search: function(){
@@ -268,8 +291,10 @@ $(function(){
         },
 
         clearSelected: function(){
+            var lngth = contactList.checked().length;
             _.invoke(contactList.checked(), 'destroy');
             this.reset();
+            alertify.success(lngth==1?  lngth + " contact successfully deleted":lngth +" contacts successfully deleted");
             return false;
         },
 
@@ -284,11 +309,24 @@ $(function(){
             $("#cont").show("clip", 500);
             $("#clear-selected").show("clip", 500);
             stroll.bind('#main ul');
+        },
+
+        checkIfNum:function () {
+            var val = $(".input#phoneNumber").val();
+            if(isNaN(val.trim())){
+                alertify.alert("Numbers only!");
+                $(".input#phoneNumber").val(val.replace(/\D/g, ""));
+            }
+        },
+
+        checkEmail: function (email) {
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
         }
     });
      
     var appView = new AppView(); //create the app
-    var foundEmpty = function(){alert("Fields with * are required.");} //prompt if one or both required fields are empty
+    var foundEmpty = function(){ alertify.alert("Fields with * are required.");} //prompt if one or both required fields are empty
 
     //show add contact fields
     $("#new-btn").click(function(){
@@ -310,4 +348,6 @@ $(function(){
     });
 
     stroll.bind('#main ul');
+
+    alertify.log('Welcome :) _ j e a n _');
 });
