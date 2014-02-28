@@ -1,0 +1,189 @@
+html{
+}
+
+body{
+	background: url(img/hero-home.jpg) no-repeat center center fixed;
+	background-size: cover;	
+}
+
+.page-header{
+	padding: 0 0 0 10px;
+	color: white;
+	text-align:left;
+}
+
+h1 span{
+	font-size: 40px;
+	text-shadow: 0 1px 1px rgba(0,0,0,.5);
+	font-weight: 500;
+	font-family: brandon-grotesque,sans-serif!important;
+	text-rendering: optimizelegibility;
+	letter-spacing:2px;
+}
+
+#mainCont{
+	margin-top: -75px;
+	width:600px;
+	height:500px;
+	border: 1px solid white;
+	padding: 10px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#foot{
+	color: #999;
+	height: 35px;
+	text-align: right;
+	padding: 5px;
+}
+
+#foot span{
+	float: left;
+}
+
+#showList{
+	float: right;
+}
+
+#showList, #cont{
+	display: none;
+}
+
+#clear-selected{
+	display: none;
+	position: absolute;
+	bottom: 75px;
+	right: 220px;
+	background-color: black;
+}
+
+.hidden{
+	display: none;
+}
+
+#suggest{
+	position: absolute;
+	bottom: 35px;
+	right: 220px;
+}
+
+.count{
+	position: absolute;
+	bottom: 60px;
+}
+
+.labels{
+	cursor:pointer;
+	display: inline-block;
+}
+
+.view{
+	min-height: 50px;
+}
+
+.view .details{
+	cursor: pointer;
+	display: none;
+}
+
+#contact-list{
+	list-style: none;
+}
+
+#contact-list .destroy {
+	position: absolute;
+	right: 5px;
+	top: 10px;
+	display: none;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	background: url(img/destroy.png) no-repeat;
+}
+
+#contact-list li:hover .destroy {
+  	display: block;
+}
+
+#contact-list .destroy:hover {
+  	background-position: 0 -20px;
+}
+
+.labels{
+	margin-left: 10px;
+}
+
+.labels:hover {
+	background:#7893AB;
+	color:#fff;
+}
+
+.labels.active {
+	background:#447BAB;
+	color:#fff;
+}
+
+#toggle-all{
+	color: white;
+	margin: 5px 0px 10px 10px;
+}
+
+.input, #add-btn{
+	margin: 5px;
+}
+
+#addSection{
+	display: none;
+	position: absolute;
+	left: 2px;
+}
+
+ul{
+	position: relative;
+	max-height: 350px;
+	margin: auto;
+	padding: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	list-style: none;
+
+	-webkit-perspective: 400px;
+	   -moz-perspective: 400px;
+	    -ms-perspective: 400px;
+	     -o-perspective: 400px;
+	        perspective: 400px;
+}
+
+ul li{
+	position: relative;
+	padding: 5px;
+	background: #eee;
+	color: #252525;
+	font-size: 18px;
+	z-index: 2;
+
+	-webkit-transform: translateZ(0px);
+	   -moz-transform: translateZ(0px);
+	    -ms-transform: translateZ(0px);
+	     -o-transform: translateZ(0px);
+	        transform: translateZ(0px);
+
+}
+
+ul li:nth-child(odd) {
+	background: #fff;
+}
+
+#cont{
+
+}
+
+.input{
+
+	color: black;
+}
+
+.edit{
+	margin: 3px;
+}

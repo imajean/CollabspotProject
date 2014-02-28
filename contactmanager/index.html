@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Backbone.js Web App</title>
+        
+        <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap-theme.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="css/stroll.css">
+        <link rel="stylesheet" href="css/screen.css">
+        <link rel="stylesheet" href="css/jquery-ui-1.10.4.custom.css">
+    </head>
+    <body>
+
+        <!--main div container of the app-->
+        <div id="appContainer">
+            <header>
+                <div class="page-header">
+                    <h1><span> Contacts<br>Manager </span></h1>
+                </div>
+            </header>
+
+
+
+            <!--section for the list of contacts-->
+            <div id="mainCont">
+                <button id="new-btn" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> New Contact</button>
+                <button id="showList" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span> Toggle List</button><br><br>
+                <div class="input-group">
+                    <span class="input-group-addon">Search by:
+                        <select>
+                            <option value="firstName">First Name</option>
+                            <option value="lastName">Last Name</option>
+                            <option value="phoneNumber">Phone Number</option>
+                            <option value="email">Email</option>               
+                        </select>
+                    </span>
+                    <input id="searchBar" class="form-control" type="text" placeholder="Search here">
+                </div>
+                <!--input field for new contact entry-->
+                <section id="addSection" class="form-inline">            
+                    <input class="input form-control" id="firstName" type="text" placeholder="First Name"><span class="badge">*</span><br>
+                    <input class="input form-control" id="lastName" type="text" placeholder="Last Name"><span class="badge">*</span><br>
+                    <input class="input form-control" id="phoneNumber" type="text" placeholder="Phone Number"><br>
+                    <input class="input form-control" id="email" type="email" placeholder="Email" required><br>
+                    <button id="add-btn" class="btn btn-info">Add Contact</button>
+                    <button id="close-btn" class="btn btn-warning">Close</button><br><br>
+                    <p class="badge">* required fields</p>
+                </section>
+                <div id="cont">
+                    <section id="main">
+                        <input id="toggle-all" type="checkbox"><span class="badge">Select all </span><br>
+
+                        <!--unordered list where each new contactView will be added-->
+                        <ul id="contact-list" class="fly"></ul>
+                    </section>
+                </div>
+
+                <div id="footer">
+                    <footer></footer>
+                </div>
+
+                <div id="suggest">
+                    <p class="badge">Double click to edit.</p>&nbsp;&nbsp;&nbsp;
+                </div>
+                
+            </div>
+        </div>
+
+        <footer id="foot" class="navbar-fixed-bottom navbar-inverse">
+            <span>j &nbsp;e &nbsp;&nbsp;a &nbsp;&nbsp;&nbsp;n</span>
+            <a href="https://www.facebook.com/kamiean.47" target="_blank"><img src="css/img/glyphicons_social_30_facebook.png"></a>
+            <a href="https://twitter.com/kamijean47" target="_blank"><img src="css/img/glyphicons_social_31_twitter.png"></a>
+            <a href="mailto:jeannabong@gmail.com" target="_blank"><img src="css/img/glyphicons_010_envelope.png"></a>
+            <a href="https://github.com/kamijean47" target="_blank"><img src="css/img/glyphicons_social_21_github.png"></a>
+        </footer>
+
+        <!--Templates-->
+        <script type="text/template" id="contact-template">
+            <div class="view">
+                <input class="toggle" type="checkbox" <%= selected ? 'checked' :'' %> /><label class="labels"><%- firstName %>&nbsp;<%- lastName %></label><br>
+                <div class="details">
+                    Phone Number: <%- phoneNumber %><br>
+                    Email: <a href="mailto:<%= email %>" target="_blank"><%= email %></a><br>
+                    <button id="edit-btn" class="btn btn-primary">Edit</button>
+                </div>
+                <a class="destroy"></a>
+            </div>
+        </script>
+
+        <script type="text/template" id="edit-template">
+            <div class="form-inline editForm">
+                <label class="form-group">
+                    <input class="edit form-control" id="firstName" value="<%- firstName %>">*
+                    <input class="edit form-control" id="lastName" value="<%- lastName %>">*
+                </label><br>                Phone Number: <input class="edit form-control" id="phoneNumber" value="<%- phoneNumber %>"><br>
+                Email: <input class="edit form-control" id="email" value="<%- email %>" type="email"><br>
+                <button id="update-btn" class="btn btn-info">Update</button>
+                <button id="cancel-btn" class="btn btn-warning">Cancel</button>
+            </div>
+        </script>
+
+        <script type="text/template" id="stats-tmpl">
+            <% if (selected) {%>
+                <a id="clear-selected" class="badge">Delete <%- selected %> selected <%- selected==1 ? 'contact':'contacts'%></a> 
+            <% } %>
+            <div class="count badge">Total: <%- total %>  <%- total<=1 ? 'contact':'contacts'%></div>
+        </script>
+
+        <script src="js/jquery-2.1.0.js"></script>
+        <script src="js/underscore.js"></script>
+        <script src="js/backbone.js"></script>
+        <script src="js/backbone.localStorage.js"></script>
+        <script src="js/json2.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/stroll.js"></script>
+        <script src="js/jquery-ui-1.10.4.custom.js"></script>
+   
+    </body>
+</html>
