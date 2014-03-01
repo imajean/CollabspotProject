@@ -209,6 +209,7 @@ $(function(){
 
             this.footer.html(this.statsTemplate({selected: selected, total: total}));
             this.allCheckbox.checked = !unchecked;
+            stroll.bind('#main ul');
         },
 
         createOnEnter: function(e){
