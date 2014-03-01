@@ -57,15 +57,15 @@ $(function(){
         editTemplate    : _.template($("#edit-template").html()), //cache the edit template
         //events specific to an item
         events: {
-            "click .toggle"     : "toggleChecked",
-            "dblclick .view"    : "edit",
-            "click #edit-btn"   : "edit",
-            "click #update-btn" : "update",
-            "click #cancel-btn" : "cancel",
-            "click a.destroy"   : "destroy",
-            "click .labels"     : "showDetails",
-            "keyup #phoneNumber"  : "checkIfNum",
-            "keypress .edit"    : "updateOnEnter"
+            "click .toggle"         : "toggleChecked",
+            "dblclick .view"        : "edit",
+            "click #edit-btn"       : "edit",
+            "click #update-btn"     : "update",
+            "click #cancel-btn"     : "cancel",
+            "click a.destroy"       : "destroy",
+            "click .labels"         : "showDetails",
+            "keyup #phoneNumber"    : "checkIfNum",
+            "keypress .edit"        : "updateOnEnter"
         },
 
         //the view listens for changes to its model
@@ -209,7 +209,6 @@ $(function(){
 
             this.footer.html(this.statsTemplate({selected: selected, total: total}));
             this.allCheckbox.checked = !unchecked;
-            stroll.bind('#main ul');
         },
 
         createOnEnter: function(e){
@@ -259,13 +258,14 @@ $(function(){
         },
 
         search: function(){
-            //contactList.sort();
-            contactList.fetch();
+            contactList.fetch({silent: true});
             $("#contact-list").empty();
             var letters = $("#searchBar").val().trim();
             var attribute = $("select").val();
             if(letters==""){
-                $("#contact-list").empty();
+                contactList.fetch();
+                this.addAll();
+                return;
             }//return if search item is blank
  
             var filtered = contactList.filter(function (item){
