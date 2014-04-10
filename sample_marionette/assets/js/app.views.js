@@ -13,7 +13,8 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
       "click .editbtn" : "edit",
       "click .savebtn" : "save",
       "click .cancelbtn" : "cancel",
-      "dblclick .items" : "edit"
+      "dblclick .items" : "edit",
+      "keydown .edits" : "keydownedit"
     },
 
     alertPhoneNumber: function(){alert(this.model.escape("phoneNumber"));},
@@ -23,14 +24,11 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
     },
 
     edit: function() {
-      alert("edit mode");
       this.template = "#edit-temp";
       this.render();
     },
 
     save: function(){
-      alert("clicked save");
-
       var dat = {};
 
       dat["fname"]=this.ui.edits[0].value;
@@ -44,9 +42,13 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
     },
 
     cancel: function() {
-      alert("clicked cancel");
       this.template = "#cont-temp";
       this.render();
+    },
+
+    keydownedit: function(e) {
+    var enterkey = 13;
+    if(e.which===enterkey){ this.save();}
     }
   });
 

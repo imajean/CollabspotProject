@@ -1,3 +1,27 @@
 body{
   padding-top: 60px;
 }
+
+#addRegion{
+  margin : 200px 0px 0px 100px;
+}
+
+.inputs{
+  margin: 5px;
+}
+
+#listRegion{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -150px;
+  padding: 5px;
+  border: 1px solid black;
+  max-height: 400px;
+  max-width: 600px;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+li{
+  margin: 15px;
+}
