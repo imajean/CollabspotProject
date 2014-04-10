@@ -10,6 +10,9 @@ ContactManager.module('cm', function(cm, App, Backbone){
 
   cm.ContactCollection = Backbone.Collection.extend({
     model: cm.Contact,
+
+    localStorage: new Backbone.LocalStorage("contact-storage"),
+
     comparator: "fname"
   });
 

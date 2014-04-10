@@ -3,12 +3,17 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
   views.ContactView = Marionette.ItemView.extend({
     tagName: "li",
     template: "#cont-temp",
+    ui: {
+      edits: '.edits'
+    },
+
     events: {
       "click p": "alertPhoneNumber",
       "click .delbtn" : "delete",
       "click .editbtn" : "edit",
       "click .savebtn" : "save",
-      "click .cancelbtn" : "cancel"
+      "click .cancelbtn" : "cancel",
+      "dblclick .items" : "edit"
     },
 
     alertPhoneNumber: function(){alert(this.model.escape("phoneNumber"));},
@@ -18,13 +23,24 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
     },
 
     edit: function() {
-      alert("clicked edit");
+      alert("edit mode");
       this.template = "#edit-temp";
       this.render();
     },
 
     save: function(){
       alert("clicked save");
+
+      var dat = {};
+
+      dat["fname"]=this.ui.edits[0].value;
+      dat["lname"]=this.ui.edits[1].value;
+      dat["phoneNumber"]=this.ui.edits[2].value;
+
+      alert("details: " + dat.fname + dat.lname + dat.phoneNumber);
+
+      this.model.save(dat);
+      this.cancel();
     },
 
     cancel: function() {
@@ -85,8 +101,9 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
     initialize: function() {
         var self = this;
         App.vent.on('contactAdded', function(eventData) {
-              self.collection.add(eventData);
+              self.collection.create(eventData);
         });
+        self.collection.fetch();
     }
   });
 
@@ -96,6 +113,6 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
 
   App.listRegion.show(contactsListView);
 
-  contactsListView.collection.add(contacts);
+  //contactsListView.collection.add(contacts);
 
 });
