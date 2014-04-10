@@ -1,6 +1,6 @@
 //@kamijean47
 $(function(){
-    
+
     //**Model**
     //create the Contact model class with attributes
     var Contact = Backbone.Model.extend({
@@ -37,7 +37,7 @@ $(function(){
         unchecked: function(){
             return this.where({selected: false})
         },
-        
+
         //to keep track of the order of the contacts, generates the next order number for new items
         nextOrder: function(){
             if(this.length===0) return 1;
@@ -106,7 +106,7 @@ $(function(){
             if(contactData.firstName && contactData.lastName){
                 this.model.save(contactData);
                 this.render();
-                alertify.success("Updated "+ this.model.get("firstName") +" "+this.model.get("lastName"));              
+                alertify.success("Updated "+ this.model.get("firstName") +" "+this.model.get("lastName"));
             }else foundEmpty();
 
             this.$el.closest("li").find(".details").show("highlight", 4000);
@@ -196,7 +196,7 @@ $(function(){
             var selected = contactList.checked().length;
             var unchecked = contactList.unchecked().length;
             var total = contactList.length;
-            
+
 
             if(contactList.length){
                 $("#showList").show();
@@ -238,7 +238,7 @@ $(function(){
             var last = $("#lastName").val().trim();
             var first = $("#firstName").val().trim();
             var email = $("#email").val().trim();
-            
+
             if( last && first) {
                 if(email!="") if(!this.checkEmail(email)){alertify.alert("Invalid Email."); return;}
                 var contactData={};
@@ -254,7 +254,7 @@ $(function(){
                     $(this).val('');
                 });
             }else foundEmpty();
-            
+
         },
 
         search: function(){
@@ -267,7 +267,7 @@ $(function(){
                 this.addAll();
                 return;
             }//return if search item is blank
- 
+
             var filtered = contactList.filter(function (item){
                 return item.get(attribute).toLowerCase().indexOf(letters.toLowerCase()) !== -1;
             });
@@ -288,7 +288,7 @@ $(function(){
         uncheckAll: function(){
             contactList.each(function (contact){
                 contact.save({'selected': false});
-            });            
+            });
         },
 
         clearSelected: function(){
@@ -325,7 +325,7 @@ $(function(){
             return re.test(email);
         }
     });
-     
+
     var appView = new AppView(); //create the app
     var foundEmpty = function(){ alertify.alert("Fields with * are required.");} //prompt if one or both required fields are empty
 
@@ -340,7 +340,7 @@ $(function(){
         $("section .input").each(function(){
             $(this).val('');
         });
-    });    
+    });
 
     $("#showList").click(function(){
         $("#cont").toggle("clip", 500);
