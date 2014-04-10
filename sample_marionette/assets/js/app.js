@@ -1,7 +1,8 @@
 var ContactManager = new Marionette.Application();
 
 ContactManager.addRegions({
-  listRegion: "#listRegion"
+  listRegion: "#listRegion",
+  editRegion: "li"
 });
 
 

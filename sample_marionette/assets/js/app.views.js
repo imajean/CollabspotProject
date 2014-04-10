@@ -6,7 +6,9 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
     events: {
       "click p": "alertPhoneNumber",
       "click .delbtn" : "delete",
-      "click .editbutton" : "edit"
+      "click .editbtn" : "edit",
+      "click .savebtn" : "save",
+      "click .cancelbtn" : "cancel"
     },
 
     alertPhoneNumber: function(){alert(this.model.escape("phoneNumber"));},
@@ -15,12 +17,21 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
       this.model.destroy();
     },
 
-    edit: function() {}
-  });
+    edit: function() {
+      alert("clicked edit");
+      this.template = "#edit-temp";
+      this.render();
+    },
 
-  views.EditView = Marionette.ItemView.extend({
-    tagName: "li",
-    template: "#edit-temp"
+    save: function(){
+      alert("clicked save");
+    },
+
+    cancel: function() {
+      alert("clicked cancel");
+      this.template = "#cont-temp";
+      this.render();
+    }
   });
 
   var AddRegion = Marionette.ItemView.extend({
