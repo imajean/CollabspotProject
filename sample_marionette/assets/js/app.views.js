@@ -57,14 +57,30 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
 
     ui: {
       "ab"  : "#addbtn",
-      "inp" : ".inputs"
+      "inp" : ".inputs",
+      "s"   : "#search"
     },
 
     events: {
       "click @ui.ab" : "add",
-      "keydown .inputs" : "pressed"
+      "keydown .inputs" : "pressed",
+      "keyup @ui.s" : "search"
     },
 
+    search: function() {
+
+      var sItem = $("#search").val();
+      if(sItem===""){
+        contactsListView.collection.fetch();
+        return;
+      }
+      contactsListView.collection.fetch();
+      var f = contactsListView.collection.filter(function(item){
+        return item.get("fname").toLowerCase().indexOf(sItem.toLowerCase()) !== -1;
+      });
+
+      contactsListView.collection.reset(f);
+    },
 
     add: function(){
 
@@ -105,16 +121,23 @@ ContactManager.module('views', function(views, App, Backbone, Marionette, $) {
         App.vent.on('contactAdded', function(eventData) {
               self.collection.create(eventData);
         });
+
         self.collection.fetch();
-    }
+    },
+    collection: new App.cm.ContactCollection()
   });
 
   var contactsListView = new views.ContactsView({
-    collection: new App.cm.ContactCollection()
+    //collection: new App.cm.ContactCollection()
   });
 
   App.listRegion.show(contactsListView);
 
-  //contactsListView.collection.add(contacts);
+  //add default contacts
+  contacts.forEach(function(item){
+   contactsListView.collection.create(item);
+  });
+
+  //contactsListView.collection.create(contacts);
 
 });

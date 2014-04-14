@@ -5,14 +5,6 @@ ContactManager.addRegions({
   editRegion: "li"
 });
 
-
-/*
-ContactManager.on("initialize:after", function(){
-
-});
-*/
-
-
   var contacts = [
   {
     fname: "zob",
